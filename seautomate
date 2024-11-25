@@ -1,0 +1,137 @@
+#!/usr/bin/env python
+# coding=utf-8
+
+import sys
+import os
+import time
+import subprocess
+import re
+from distutils.spawn import find_executable
+
+# Compatibilidade entre Py2/3
+# O Python 3 renomeou raw_input para input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+try:
+    reload
+
+except NameError:
+    from importlib import reload
+
+# verifica onde estamos e carrega o diretório padrão
+if os.path.isdir("/usr/local/share/setoolkit-pt"):
+    if not os.path.isfile("setoolkit"):
+        os.chdir("/usr/local/share/setoolkit-pt")
+        sys.path.append("/usr/local/share/setoolkit-pt")
+
+import src.core.setcore as core
+
+# se não conseguirmos ver nossa configuração, então algo não foi bem..
+if not os.path.isfile("/etc/setoolkit-pt/set.config"):
+    core.print_error("Não é possível localizar o executável do SET. Tente rodar a partir do diretório local.")
+    core.print_error("Se isso não funcionar, execute o arquivo setup.py de instalação.")
+    sys.exit()
+
+
+#
+# Modo cliente simples para o SET
+#
+#
+# tenta importar pexpect
+try:
+    import pexpect
+
+# se pexpect falhar
+except ImportError:
+    print("\n[*] PEXPECT é necessário, por favor, baixe e instale antes de executar isso...")
+    print("[*] Saindo do modo SEAUTOMATE...")
+    sys.exit()
+
+# tenta definir o nome do arquivo através do argumento especificado durante o modo de linha de comando
+try:
+    filename = sys.argv[1]
+
+# se ocorrer uma exceção, exibe a sintaxe da linha de comando
+except IndexError:
+    print("\nO Social-Engineer Toolkit Automate - Automação para o SET")
+    print("\nSimplesmente crie um arquivo que tenha cada opção que você deseja do modo de menu.")
+    print("Por exemplo, seu arquivo deve ter uma aparência semelhante a isto:")
+    print("\n2\n2\n2\nhttps://gmail.com\n2\n2\n443\netc.\n")
+    print("Uso: ./seautomate <nome do arquivo>")
+    sys.exit()
+
+# se o nome do arquivo não existir, lança um erro
+if not os.path.isfile(filename):
+    print("\n[*] Desculpe, não foi possível localizar esse nome de arquivo, tente novamente.\n")
+    sys.exit()
+
+password = False
+# se o caminho existir
+if os.path.isfile(filename):
+    try:
+        print("[*] Iniciando o SET em um processo em segundo plano...")
+        cmd = find_executable('python3') or find_executable('python')
+        child = pexpect.spawn("{} setoolkit".format(cmd))
+        child.expect("99\) Sair do Social-Engineer Toolkit")
+        with open(filename) as fileopen:
+            for line in fileopen:
+                line = line.rstrip()
+                # se apenas usarmos enter, envia padrão
+                if line == "":
+                    line = "linha em branco"
+
+                #match1 = re.search("OMGPASSWORDHERE", line)
+                #if match1:
+                #    line = line.replace("OMGPASSWORDHERE", "")
+                #    senha = True
+
+                #if senha é False:
+                print("[*] Enviando comando {0} para a interface...".format(line))
+                #if senha é True:
+                #    print("[*] Enviando comando [**********] (senha ocultada) para a interface...")
+                #    senha = False
+
+                if line == "linha em branco":
+                    line = "\n"
+
+                if line == "CONTROL-C-HERE":
+                    try:
+                        print("[*] Isso pode levar alguns segundos enquanto o SET atualiza...")
+                        child.expect("Próxima linha do corpo:")
+                        time.sleep(2)
+                        child.sendline("\n")
+                        child.sendcontrol('c')
+
+                    # se o usuário estiver usando pexpect < 2.3
+                    except AttributeError:
+                        print("[-] Erro: Você está usando pexpect < 2.3, que é necessário para esta função")
+                        choice = input("Você gostaria de instalá-lo agora sim ou não: ")
+                        if choice == "sim" or choice == "s":
+                            subprocess.Popen("pip install pexpect", shell=True).wait()
+                            try:
+                                reload(pexpect)
+                                child.sendcontrol('c')
+                            except:
+                                print("[*] Reabra o Social-Engineer Toolkit para que as alterações tenham efeito.")
+                                sys.exit()
+                if line != "CONTROL-C-HERE":
+                    child.sendline(line)
+
+        print("[*] Envio de comandos finalizado, interagindo com a interface..")
+        child.interact()
+
+    # às vezes o pexpect pode gerar erros ao sair; isso lida com eles
+    except OSError:
+        sys.exit()
+
+    # trata interrupções de teclado (controlc)
+    except KeyboardInterrupt:
+        print("[*] Control-C detectado, saindo do Social-Engineer Toolkit..")
+        sys.exit()
+
+    # trata tudo o mais
+    except Exception as e:
+        print("[*] Algo deu errado, imprimindo erro: {0}".format(e))

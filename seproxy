@@ -1,0 +1,72 @@
+#!/usr/bin/python
+
+#
+# Proxy simples para o SET, note que aparecerá no histórico
+#
+
+import sys
+import getpass
+import os
+import subprocess
+import re
+
+import src.core.setcore as core
+
+# Compatibilidade entre Py2/3
+# O Python 3 renomeou raw_input para input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+# obtém o sistema operacional
+operating_system = core.check_os()
+
+# se for windows, fazer algumas coisas
+if operating_system == "posix":
+
+    definepath = os.getcwd()
+
+    print("\n[*] Bem-vindo à Utilidade de Configuração do SET-Proxy")
+    print("\nInsira as informações de configuração do proxy abaixo.\n\nExemplo: http://10.3.1.1:8080\n")
+
+    try:
+
+        proxy = input("Digite o servidor proxy: ")
+        username = input("Digite o nome de usuário para o proxy (aperte enter para nenhum): ")
+        password = getpass.getpass("Digite a senha para o proxy (aperte enter para nenhuma): ")
+
+    except KeyboardInterrupt:
+        print("\n[!] Saindo do Social-Engineer Toolkit.")
+        sys.exit()
+
+    if username != "":
+        proxy_string = "export http_proxy='http://{0}:{1}@{2}'".format(username, password, proxy)
+    else:
+        proxy_string = "export http_proxy='http://{0}'".format(proxy)
+
+    with open(os.path.join(core.userconfigpath, "proxy.config"), "w") as filewrite:
+        filewrite.write(proxy_string)
+
+    def kill_proc(port, flag):
+        proc = subprocess.Popen("netstat -antp | grep '{0}'".format(port), shell=True, stdout=subprocess.PIPE)
+        stdout_value = proc.communicate()[0]
+        a = re.search("\d+/{0}".format(flag), stdout_value)
+        if a:
+            b = a.group()
+            b = b.replace("/{0}".format(flag), "")
+            subprocess.Popen("kill -9 {0} 1> /dev/null 2> /dev/null".format(b), shell=True).wait()
+
+    # limpa processos obsoletos do SET
+    try:
+        # mata qualquer processo python rodando na porta 80
+        kill_proc("80", "python")
+        # mata qualquer processo ruby na porta 443 que geralmente é um listener indesejado
+        kill_proc("443", "ruby")
+
+    # trata erros
+    except Exception as error:
+        core.log(error)
+
+else:
+    print("[!] Desculpe, isso só funciona em sistemas baseados em posix (nix) e não é compatível com este sistema operacional.")
