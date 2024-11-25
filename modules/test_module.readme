@@ -1,0 +1,18 @@
+# Estes são os campos obrigatórios
+import src.core.setcore as core
+
+# Compatibilidade entre Py2/3
+# O Python 3 renomeou raw_input para input
+try:
+    input = raw_input
+except NameError:
+    pass
+
+MAIN = "   Este é um módulo de teste"
+AUTHOR = "   Dave - TrustedSec"
+
+
+# def main(): cabeçalho é necessário
+def main():
+    core.java_applet_attack("https://gmail.com", "443", "reports/")
+    pause = input("   Este módulo foi concluído. Pressione <enter> para continuar")
