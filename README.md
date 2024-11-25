@@ -1,6 +1,6 @@
 ### O Toolkit de Engenharia Social (SET)  
 **Copyright © 2020**  
-**Autor:** David Kennedy (ReL1K) @HackingDave  
+**Autor:** David Kennedy (ReL1K) @HackingDave  & Tiago Matias
 **Empresa:** TrustedSec  
 
 ---
@@ -53,8 +53,8 @@ O Kali Linux no Windows 10 vem com uma instalação mínima, sem ferramentas pr�
 
 #### Instalação no Linux:  
 ```bash
-git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
-cd setoolkit
+git clone https://github.com/tiagomatias930/setoolkit-pt.git
+cd setoolkit-pt
 pip3 install -r requirements.txt
 python3 setup.py
 ```  
