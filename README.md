@@ -1,50 +1,69 @@
-The Social-Engineer Toolkit (SET)
-Copyright :copyright: 2020
-Escrito por: David Kennedy (ReL1K) @HackingDave
-Empresa: TrustedSec
+### O Toolkit de Engenharia Social (SET)  
+**Copyright © 2020**  
+**Autor:** David Kennedy (ReL1K) @HackingDave  
+**Empresa:** TrustedSec  
 
-Descrição
-The Social-Engineer Toolkit é uma estrutura de teste de penetração de código aberto projetada para engenharia social. O SET tem vários vetores de ataque personalizados que permitem que você faça um ataque crível rapidamente. O SET é um produto da TrustedSec, LLC – uma empresa de consultoria em segurança da informação localizada em Cleveland, Ohio.
-AVISO LEGAL: Isso é apenas para fins de teste e só pode ser usado quando consentimento estrito foi dado. Não use isso para fins ilegais, ponto final. Leia a LICENÇA em leia-me/LICENÇA para o licenciamento do SET.
-Plataformas suportadas:
-1- Linux
-2- Mac OS X (experimental)
+---
 
-Instalação:
+### Descrição  
+O Toolkit de Engenharia Social é um framework de código aberto projetado para testes de penetração focados em engenharia social. O SET possui diversos vetores de ataque personalizados que permitem criar ataques realistas de forma rápida. O SET é um produto da **TrustedSec, LLC**, uma empresa de consultoria em segurança da informação localizada em Cleveland, Ohio.  
 
-*Linux*
+**AVISO:** Esta ferramenta é apenas para fins de teste e deve ser usada estritamente com consentimento explícito. **Não utilize esta ferramenta para fins ilegais, em hipótese alguma.** Leia o arquivo de licença em `readme/LICENSE` para mais detalhes sobre a licença do SET.  
 
-Você precisará usar um ambiente virtual para a instalação do Python se estiver usando um Macbook M2 com as seguintes instruções em sua CLI dentro do diretório social-engineer-toolkit.
-# para instalar dependências, execute o seguinte:
+---
 
+### Plataformas Suportadas:  
+- **Linux**  
+- **Mac OS X** (experimental)  
+
+---
+
+### Instalação  
+
+#### Via `requirements.txt`:  
+```bash
+pip3 install -r requirements.txt
+python3 setup.py
+```  
+
+---
+
+#### Instalar o SET no Mac OS X:  
+Se estiver usando um Macbook com processador M2, é necessário configurar um ambiente virtual. Siga as instruções abaixo no terminal dentro do diretório do SET:  
+```bash
+# Para instalar as dependências:
 python3 -m venv path/to/venv
 source path/to/venv/bin/activate
 python3 -m pip install -r requirements.txt
 
-# para instalar SET
+# Para instalar o SET:
 sudo python3 setup.py
+```  
 
-Instalação
+---
 
-Windows 10 WSL/WSL2 Kali Linux
-
+#### Instalação no Windows 10 (WSL/WSL2 com Kali Linux):  
+Para o Windows Subsystem for Linux (WSL/WSL2) com o Kali Linux:  
+```bash
 sudo apt install set -y
+```  
+O Kali Linux no Windows 10 vem com uma instalação mínima, sem ferramentas pré-instaladas. Com o comando acima, é possível instalar facilmente o Social-Engineer Toolkit sem precisar do `pip`.  
 
-O Kali Linux no Windows 10 é uma instalação mínima, portanto, não tem nenhuma ferramenta instalada. Você pode instalar facilmente o Social Engineer Toolkit no WSL/WSL2 sem precisar do pip usando o comando acima.
+---
 
-Linux
-
+#### Instalação no Linux:  
+```bash
 git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
-
 cd setoolkit
-
 pip3 install -r requirements.txt
+python3 setup.py
+```  
 
-python setup.py
+---
 
-Tutorial SET
+### Tutorial do SET  
+Para um manual completo de uso do SET, acesse o **manual do usuário do SET**.  
 
-Para um documento completo sobre como usar o SET, visite o manual do usuário do SET.
+--- 
 
-Bugs e melhorias
-Para relatórios de bug ou melhorias, abra um problema aqui.
+Precisa de algo mais ou deseja personalizar a tradução? 😊
