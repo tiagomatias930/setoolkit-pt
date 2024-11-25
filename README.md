@@ -1,1 +1,42 @@
-Replica do SEToolkit (Social Engineering Toolkit) Este projeto é uma réplica em português da ferramenta SEToolkit (Social Engineering Toolkit), amplamente utilizada para simulação de ataques de engenharia social e testes de segurança cibernética.  A proposta é adaptar e reimplementar as funcionalidades do SEToolkit com foco em usuários da língua portuguesa, proporcionando uma interface amigável, comandos intuitivos e ferramentas específicas para o contexto local.  Funcionalidades Principais (Planejadas): Criação de páginas de phishing: Geração de sites falsos para testes de segurança. Ataques baseados em e-mail: Simulação de campanhas de phishing e spear-phishing. Clonagem de sites: Captura de credenciais de login em sites clonados (apenas para ambientes de teste). Manipulação de Payloads: Geração de cargas maliciosas personalizadas para testes de invasão. Automatização de Ataques: Integração de scripts e automação para facilitar os processos de simulação. Objetivo: Desenvolver uma ferramenta poderosa, educativa e acessível para profissionais de segurança da informação e estudantes que desejam explorar e aprender sobre engenharia social de forma responsável e ética.  Atenção: Este projeto é exclusivamente para uso educativo e em ambientes controlados, com autorização. Não nos responsabilizamos por qualquer uso indevido desta ferramenta.  Exemplo de Uso: Clonagem de um site para testar coleta de credenciais. Envio de e-mails simulados para treinar equipes contra ataques de phishing. Testes de vulnerabilidade em redes locais com payloads personalizados. Se você tiver interesse em contribuir ou sugerir melhorias, envie um pull request ou entre em contato! 😊
+The Social-Engineer Toolkit (SET-PT)
+Copyright :copyright: 2020
+Escrito por: David Kennedy (ReL1K) @HackingDave & Tiago Matias
+Empresa: TrustedSec
+
+Descrição
+The Social-Engineer Toolkit-Pt é uma estrutura de teste de penetração de código aberto projetada para engenharia social. O SET tem vários vetores de ataque personalizados que permitem que você faça um ataque crível rapidamente. O SET é um produto da TrustedSec, LLC – uma empresa de consultoria em segurança da informação localizada em Cleveland, Ohio.
+AVISO LEGAL: Isso é apenas para fins de teste e só pode ser usado quando consentimento estrito foi dado. Não use isso para fins ilegais, ponto final. Leia a LICENÇA em leia-me/LICENÇA para o licenciamento do SET.
+Plataformas suportadas:
+Linux
+Mac OS X (experimental)
+Instalação
+Instalar via requirements.txt
+pip3 install -r requirements.txt
+python3 setup.py
+Instalar SET
+=======
+Mac OS X
+Você precisará usar um ambiente virtual para a instalação do Python se estiver usando um Macbook M2 com as seguintes instruções em sua CLI dentro do diretório social-engineer-toolkit.
+# para instalar dependências, execute o seguinte:
+python3 -m venv path/to/venv
+source path/to/venv/bin/activate
+python3 -m pip install -r requirements.txt
+
+# para instalar SET
+sudo python3 setup.py
+
+Instalação
+Windows 10 WSL/WSL2 Kali Linux
+sudo apt install set -y
+O Kali Linux no Windows 10 é uma instalação mínima, portanto, não tem nenhuma ferramenta instalada. Você pode instalar facilmente o Social Engineer Toolkit no WSL/WSL2 sem precisar do pip usando o comando acima.
+Linux
+git clone https://github.com/trustedsec/social-engineer-toolkit/ setoolkit/
+cd setoolkit
+pip3 install -r requirements.txt
+python setup.py
+
+Tutorial SET
+Para um documento completo sobre como usar o SET, visite o manual do usuário do SET.
+
+Bugs e melhorias
+Para relatórios de bug ou melhorias, abra um problema aqui.
